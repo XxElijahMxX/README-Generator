@@ -114,12 +114,24 @@ const questions = [
             }
         }
     },
+    {
+        type: 'input',
+        name: 'questions',
+        message: 'Enter Github user name to link your account',
+        response: questResponse => {
+            if (questResponse) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    },
 ];
 
 // TODO: Create a function to write README file
 const writeToFile = fileData => {
     return new Promise((resolve, reject) => {
-        fs.writeFile('./generateREADME.md', fileData, err => {
+        fs.writeFile('./generatedREADME.md', fileData, err => {
             if (err) {
                 reject(err);
                 return;
@@ -134,11 +146,14 @@ const writeToFile = fileData => {
 // TODO: Create a function to initialize app
 function init() {
     inquirer.prompt(questions)
-    .then(function(answer) {
-        console.log(answer);
-        let fileData = generateMarkdown(answer);
+    .then(function(data) {
+        console.log(data);
+        let fileData = generateMarkdown(data);
+        writeToFile(fileData)
     });
 }
 
 // Function call to initialize app
 init();
+
+module.exports = questions;

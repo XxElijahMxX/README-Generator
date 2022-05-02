@@ -1,6 +1,6 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const index = require('../index');
+const index = require('../index.js');
 // TODO: Create a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
 function renderLicenseBadge(license) {
@@ -36,15 +36,54 @@ function renderLicenseLink(license) {
 
 // TODO: Create a function that returns the license section of README
 // If there is no license, return an empty string
-function renderLicenseSection(license) {}
+function renderLicenseSection(license) {
+  var licenseSection = ''
+  if(license === 'None') {
+    licenseSection = ''
+  } else {
+    licenseSection = 
+    `License: ${license}`
+  }
+  return licenseSection;
+}
 
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
   return `# ${data.title}
 
-  
 
+          ## ${renderLicenseSection(data.license)} 
+          ## ${renderLicenseBadge(data.license)}
+          ### ${renderLicenseLink(data.license)}
+
+
+          ## Table of Contents:
+          ### * [Installation](#installation)
+          ### * [License](#license)
+          ### * [Contributors](#contributors)
+          ### * [Usage](#usage)
+          ### * [Tests](#tests)
+          
+
+          ## Installation:
+          ### Install these for this project to make this app work:
+          ### ${data.installation}
+
+          ## Usage:
+          ### ${data.usage}
+
+          ## Contributors:
+          ### ${data.contributors}
+
+
+          ## Questions:
+          ### You can reach me here if you have any questions
+          ### Github: https://github.com/${data.questions}
+          ### or
+          ### Email: ${data.email}
+
+          
 `;
 }
-
+// export
 module.exports = generateMarkdown;
